@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, Input, Heading, Stack } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { BaseError, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { CONTRACT_ADDRESS, DECIMALS, TOKEN_ABI } from "@/constants";
 import { parseUnits } from "viem";

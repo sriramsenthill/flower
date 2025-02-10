@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Input, Text, Heading, Stack } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { useTokenOperations } from "@/hooks/useTokenOperations";
 
 

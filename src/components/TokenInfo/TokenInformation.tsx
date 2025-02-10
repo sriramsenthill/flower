@@ -1,21 +1,18 @@
 "use client";
 
 import { useTokenOperations } from "@/hooks/useTokenOperations";
-import { Box, Text, Heading, Flex, Stack, Separator } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 
 export default function TokenInformation() {
     const [loading, setLoading] = useState(true);
-
     const [tokenDetails, setTokenDetails] = useState<{
         name: string;
         symbol: string;
         decimals: string;
         balance: string;
         totalSupply: string;
-        owner: string;
-        status: boolean;
+        minter: string;
     } | null>(null);
 
     const { address } = useAccount();
@@ -25,22 +22,30 @@ export default function TokenInformation() {
         getTokenSymbol,
         getTokenDecimals,
         checkBalance,
-        getOwner,
+        getMinter,
         getTotalSupply,
-        getStatus,
     } = useTokenOperations();
-
 
     const fetchTokenDetails = async () => {
         try {
-            const name = await getTokenName();
-            const symbol = await getTokenSymbol();
-            const decimals = await getTokenDecimals();
-            const balance = await checkBalance(address);
-            const totalSupply = await getTotalSupply();
-            const owner = await getOwner();
-            const status = await getStatus();
-            setTokenDetails({ name, symbol, decimals, balance, totalSupply, owner, status });
+            const [name, symbol, decimals, balance, totalSupply, minter] =
+                await Promise.all([
+                    getTokenName(),
+                    getTokenSymbol(),
+                    getTokenDecimals(),
+                    checkBalance(address),
+                    getTotalSupply(),
+                    getMinter()
+                ]);
+
+            setTokenDetails({
+                name,
+                symbol,
+                decimals,
+                balance,
+                totalSupply,
+                minter
+            });
         } catch (error) {
             console.error("Error fetching token details:", error);
         } finally {
@@ -50,81 +55,61 @@ export default function TokenInformation() {
 
     useEffect(() => {
         fetchTokenDetails();
-    }, []);
+    }, [address]);
 
     return (
-        <Box
-            p={8}
-            borderWidth={2}
-            borderRadius="lg"
-            boxShadow="sm"
-            bg="gray.50"
-            maxW="4xl"
-            minW="md"
-            mx="auto"
-            mt={8}
-        >
-            <Heading fontSize="xl" mb={4} color="black" fontWeight="semibold" textAlign="center">
+        <div className="p-6 max-w-4xl min-w-md mx-auto mt-8 bg-gray-50">
+            <h2 className="text-xl font-semibold text-center mb-4">
                 Token Information
-            </Heading>
+            </h2>
 
-            {
-                loading ? <Flex align="center" justify="center" minHeight="200px">
-                    <Text fontSize="md" fontWeight="semibold" color="teal.700">
+            {loading ? (
+                <div className="flex items-center justify-center min-h-[200px]">
+                    <p className="text-sm font-semibold text-teal-700">
                         Loading...
-                    </Text>
-                </Flex> :
-                    tokenDetails ? <Stack gap={3} separator={<Separator borderColor="gray.300" />}>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Name:
-                            </Text>
-                            <Text color="gray.600">{tokenDetails.name}</Text>
-                        </Flex>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Symbol:
-                            </Text>
-                            <Text color="gray.600">{tokenDetails.symbol}</Text>
-                        </Flex>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Decimals:
-                            </Text>
-                            <Text color="gray.600">{tokenDetails.decimals}</Text>
-                        </Flex>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Your Balance:
-                            </Text>
-                            <Text color="gray.600">{tokenDetails.balance}</Text>
-                        </Flex>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Total Supply:
-                            </Text>
-                            <Text color="gray.600">{tokenDetails.totalSupply}</Text>
-                        </Flex>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Owner:
-                            </Text>
-                            <Text letterSpacing="wider" color="gray.600">{tokenDetails.owner.slice(0, 8)}.....{tokenDetails.owner.slice(-7)}</Text>
-                        </Flex>
-                        <Flex justify="space-between">
-                            <Text fontSize="md" fontWeight="semibold" color="gray.700">
-                                Status:
-                            </Text>
-                            <Text color={tokenDetails.status ? "green.600" : "red.600"}>
-                                {tokenDetails.status ? "Active" : "Inactive"}
-                            </Text>
-                        </Flex>
-                    </Stack> : <Box textAlign="center" p={6}>
-                        <Text fontSize="md" color="red.500">
-                            Failed to fetch token details. Please try again later.
-                        </Text>
-                    </Box>
-            }
-        </Box>
+                    </p>
+                </div>
+            ) : tokenDetails ? (
+                <div className="flex flex-col gap-3">
+                    <div className="flex justify-between items-center">
+                        <p className="text-sm font-semibold text-gray-700">Name:</p>
+                        <p className="text-gray-600">{tokenDetails.name}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                        <p className="text-sm font-semibold text-gray-700">Symbol:</p>
+                        <p className="text-gray-600">{tokenDetails.symbol}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                        <p className="text-sm font-semibold text-gray-700">Decimals:</p>
+                        <p className="text-gray-600">{tokenDetails.decimals}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                        <p className="text-sm font-semibold text-gray-700">Your Balance:</p>
+                        <p className="text-gray-600">{tokenDetails.balance}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                        <p className="text-sm font-semibold text-gray-700">Total Supply:</p>
+                        <p className="text-gray-600">{tokenDetails.totalSupply}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                        <p className="text-sm font-semibold text-gray-700">Minter:</p>
+                        <p className="text-gray-600 tracking-wider">
+                            {`${tokenDetails.minter.slice(0, 8)}...${tokenDetails.minter.slice(-7)}`}
+                        </p>
+                    </div>
+                </div>
+            ) : (
+                <div className="text-center p-6">
+                    <p className="text-sm text-red-500">
+                        Failed to fetch token details. Please try again later.
+                    </p>
+                </div>
+            )}
+        </div>
     );
 }

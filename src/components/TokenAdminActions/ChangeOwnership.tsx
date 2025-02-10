@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toaster } from "../ui/toaster";
 import { Flex, Input } from "@chakra-ui/react";
-import { Button } from "../ui/button";
+import Button from "../ui/button";
 import { BaseError, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { CONTRACT_ADDRESS, TOKEN_ABI } from "@/constants";
 

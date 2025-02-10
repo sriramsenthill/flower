@@ -49,7 +49,7 @@ export default function Home() {
       {isConnected && (
         <>
           {/* Token Info Section */}
-          <Box mt={12} px={6} py={8} bg="white" borderRadius="lg">
+          <Box mt={12} px={6} py={8} borderRadius="lg">
             <h1 className="w-full text-center text-3xl text-black h-fit font-bold mb-2">
               <Highlight query="Flower Token." styles={{ color: "teal.700" }}>
                 Interact with Flower Token.
@@ -63,17 +63,16 @@ export default function Home() {
               justify="center"
               align="start"
               p={4}
-              bg="gray.50"
               borderRadius="lg"
             >
-              {/* <TokenInformation />
+              <TokenInformation />
               <CheckAllowance />
-              <CheckBalance /> */}
+              <CheckBalance />
             </Flex>
           </Box>
 
           {/* Token Transactions Section */}
-          <Box mt={12} px={6} py={8} bg="white" borderRadius="lg">
+          <Box mt={12} px={6} py={8} borderRadius="lg">
             <Heading
               as="h1"
               textAlign="center"
@@ -94,17 +93,16 @@ export default function Home() {
               justify="center"
               align="start"
               p={4}
-              bg="gray.50"
               borderRadius="lg"
             >
-              {/* <TransferFromTokens />
+              <TransferFromTokens />
               <TransferTokens />
-              <ApproveAllowance /> */}
+              <ApproveAllowance />
             </Flex>
           </Box>
 
           {/* Admin Operations Section */}
-          <Box mt={12} px={6} py={8} bg="white" borderRadius="lg">
+          <Box mt={12} px={6} py={8} borderRadius="lg">
             <Heading
               as="h1"
               textAlign="center"
@@ -125,12 +123,11 @@ export default function Home() {
               justify="center"
               align="start"
               p={4}
-              bg="gray.50"
               borderRadius="lg"
             >
-              {/* <TokenAdminActions />
+              <TokenAdminActions />
               <MintTokens />
-              <BurnTokens /> */}
+              <BurnTokens />
             </Flex>
           </Box>
         </>

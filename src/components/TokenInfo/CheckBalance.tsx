@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Text, Heading, Input, Stack } from '@chakra-ui/react';
-import { Button } from '../ui/button';
+import Button from '../ui/button';
 import { toaster } from '../ui/toaster';
 import { useTokenOperations } from '@/hooks/useTokenOperations';
 

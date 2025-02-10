@@ -1,5 +1,5 @@
 import { toaster } from "../ui/toaster";
-import { Button } from "../ui/button";
+import Button from "../ui/button";
 import { BaseError, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { CONTRACT_ADDRESS, TOKEN_ABI } from "@/constants";
 import { useEffect } from "react";

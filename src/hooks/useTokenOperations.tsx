@@ -4,7 +4,6 @@ import client from "@/lib/viemClient";
 import { readContract } from "viem/actions";
 
 export const useTokenOperations = () => {
-
     const checkBalance = async (address: string | undefined) => {
         if (!address) return "";
 
@@ -39,19 +38,19 @@ export const useTokenOperations = () => {
         }
     };
 
-    const getOwner = async () => {
+    const getMinter = async () => {
         try {
             const result: string = await readContract(client, {
                 address: CONTRACT_ADDRESS,
                 abi: TOKEN_ABI,
-                functionName: "getOwner",
+                functionName: "minter",
                 args: [],
                 blockTag: "latest",
             }) as string;
 
             return result;
         } catch (error) {
-            console.error("Error fetching balance:", error);
+            console.error("Error fetching minter:", error);
             return "null";
         }
     }
@@ -77,7 +76,7 @@ export const useTokenOperations = () => {
             const result: bigint = await readContract(client, {
                 address: CONTRACT_ADDRESS,
                 abi: TOKEN_ABI,
-                functionName: "getTotalSupply",
+                functionName: "totalSupply",
                 args: [],
                 blockTag: "latest",
             }) as bigint;
@@ -106,34 +105,27 @@ export const useTokenOperations = () => {
 
     const getTokenDecimals = async () => {
         try {
-            const result: string = await readContract(client, {
+            const result: number = await readContract(client, {
                 address: CONTRACT_ADDRESS,
                 abi: TOKEN_ABI,
-                functionName: "getDecimals",
+                functionName: "decimals",
                 args: [],
                 blockTag: "latest",
-            }) as string;
+            }) as number;
 
-            return result;
+            return result.toString();
         } catch (error) {
             throw error;
         }
     }
 
-    const getStatus = async () => {
-        try {
-            const result: boolean = await readContract(client, {
-                address: CONTRACT_ADDRESS,
-                abi: TOKEN_ABI,
-                functionName: "status",
-                args: [],
-                blockTag: "latest",
-            }) as boolean;
-
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
-    return { getStatus, getTotalSupply, getTokenDecimals, getTokenSymbol, getTokenName, getOwner, checkBalance, checkAllowance };
+    return {
+        getTotalSupply,
+        getTokenDecimals,
+        getTokenSymbol,
+        getTokenName,
+        getMinter,
+        checkBalance,
+        checkAllowance
+    };
 };
