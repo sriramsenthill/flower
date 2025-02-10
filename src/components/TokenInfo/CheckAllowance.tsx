@@ -54,7 +54,7 @@ export default function CheckAllowance() {
                     </div>
                     <div className="flex h-6 justify-between">
                         <input
-                            className="w-full outline-none border-none bg-transparent placeholder:text-custom-gray text-base sm:text-xl font-bold"
+                            className="w-full outline-none border-none bg-transparent text-custom-gray placeholder:text-custom-gray text-base sm:text-xl font-bold"
                             type="text"
                             placeholder="Enter from address"
                             value={owner}
@@ -73,7 +73,7 @@ export default function CheckAllowance() {
                     </div>
                     <div className="flex h-6 justify-between">
                         <input
-                            className="w-full outline-none border-none bg-transparent placeholder:text-custom-gray text-base sm:text-xl font-bold"
+                            className="w-full outline-none border-none bg-transparent text-custom-gray placeholder:text-custom-gray text-base sm:text-xl font-bold"
                             type="text"
                             placeholder="Enter to address"
                             value={spender}

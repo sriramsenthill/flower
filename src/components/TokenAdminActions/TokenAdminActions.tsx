@@ -1,9 +1,8 @@
 "use client";
 
-import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import ChangeOwnership from "./ChangeOwnership";
 import { useAccount } from "wagmi";
-import { useEffect, useState } from "react";
 import { useTokenOperations } from "@/hooks/useTokenOperations";
 import { toaster } from "../ui/toaster";
 import PauseTokenOperations from "./PauseTokenOperations";
@@ -11,9 +10,7 @@ import UnPauseTokenOperations from "./UnPauseTokenOperations";
 
 export default function TokenAdminActions() {
     const { isConnected, address } = useAccount();
-
     const [isOwner, setIsOwner] = useState<boolean>(false);
-
     const { getOwner } = useTokenOperations();
 
     const checkTokenOwner = async () => {
@@ -32,43 +29,24 @@ export default function TokenAdminActions() {
             });
         }
         setIsOwner(false);
-        console.log(isOwner);
-    }
+    };
 
     useEffect(() => {
         checkTokenOwner();
     }, [isConnected]);
 
-
     return (
-        <Box
-            p={8}
-            borderWidth={2}
-            borderRadius="lg"
-            boxShadow="sm"
-            bg="gray.50"
-            maxW="md"
-            mx="auto"
-            mt={8}
-        >
-            <Heading
-                fontSize="xl"
-                mb={4}
-                color="black"
-                fontWeight="semibold"
-                textAlign="center"
-            >
-                Admin Operations
-            </Heading>
-
-            <Stack gap={4}>
+        <div className="flex flex-col gap-4 p-3 bg-white/50 rounded-2xl">
+            {/* Heading */}
+            {/* Admin Actions */}
+            <div className="flex flex-col gap-4">
                 <ChangeOwnership />
-                <Flex flexDirection="row" gap={4} justify="space-between" width="full">
+
+                <div className="flex flex-row gap-4 justify-between w-full">
                     <PauseTokenOperations />
                     <UnPauseTokenOperations />
-                </Flex>
-            </Stack>
-        </Box>
+                </div>
+            </div>
+        </div>
     );
-
-};
+}

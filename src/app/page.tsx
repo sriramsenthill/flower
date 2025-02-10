@@ -6,12 +6,11 @@ import CheckAllowance from "@/components/TokenInfo/CheckAllowance";
 import MintTokens from "@/components/TokenAdminActions/MintTokens";
 import TransferFromTokens from "@/components/TokenTransactions/TransferFromTokens";
 import TransferTokens from "@/components/TokenTransactions/TransferTokens";
-import { useAccount } from "wagmi";
-import { Box, Flex, Heading, Highlight, Stack, Text } from "@chakra-ui/react";
 import TokenAdminActions from "@/components/TokenAdminActions/TokenAdminActions";
 import CheckBalance from "@/components/TokenInfo/CheckBalance";
 import TokenInformation from "@/components/TokenInfo/TokenInformation";
 import { useTokenOperations } from "@/hooks/useTokenOperations";
+import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import { toaster } from "@/components/ui/toaster";
 
@@ -23,109 +22,62 @@ export default function Home() {
   const checkTokenOwner = async () => {
     try {
       const result = await getOwner();
-      if (address === result) {
-        setIsOwner(true);
-        return;
-      }
+      setIsOwner(address === result);
     } catch (error) {
-      console.error("Error fetching allowance:", error);
+      console.error("Error fetching owner:", error);
       toaster.create({
         title: "Error",
-        description: "Failed to fetch allowance. Please try again.",
+        description: "Failed to fetch owner details. Please try again.",
         type: "error",
       });
     }
-    setIsOwner(false);
-  }
+  };
 
   useEffect(() => {
-    checkTokenOwner();
+    if (isConnected) checkTokenOwner();
   }, [isConnected]);
 
   return (
-    <Box height="100%" minHeight="100dvh" p={6}>
-
-
-      {isConnected && (
-        <>
-          {/* Token Info Section */}
-          <Box mt={12} px={6} py={8} borderRadius="lg">
-
-
-            <Flex
-              wrap="wrap"
-              justify="center"
-              align="start"
-              p={4}
-              borderRadius="lg"
-            >
+    <div className="min-h-screen p-6 bg-transparent">
+      {isConnected ? (
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* 🔹 Token Information Section */}
+          <div className="flex flex-col gap-6 p-3 bg-white/50 rounded-2xl">
+            <h2 className="text-lg font-bold text-custom-gray">🔍 Token Information</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <TokenInformation />
-              <CheckAllowance />
               <CheckBalance />
-            </Flex>
-          </Box>
+              <CheckAllowance />
+            </div>
+          </div>
 
-          {/* Token Transactions Section */}
-          <Box mt={12} px={6} py={8} borderRadius="lg">
-            <Heading
-              as="h1"
-              textAlign="center"
-              fontSize="3xl"
-              fontWeight="bold"
-              color="black"
-              mb={2}
-            >
-              <Highlight query="Flower Token" styles={{ color: "teal.700" }}>
-                Flower Token Transactions
-              </Highlight>
-            </Heading>
-            <Text fontSize="sm" color="gray.500" mb={6} textAlign="center">
-              Transfer Flower tokens and manage allowances securely.
-            </Text>
-            <Flex
-              wrap="wrap"
-              justify="center"
-              align="start"
-              p={4}
-              borderRadius="lg"
-            >
-              <TransferFromTokens />
+          {/* 🔹 Token Transactions Section */}
+          <div className="flex flex-col gap-6 p-3 bg-white/50 rounded-2xl">
+            <h2 className="text-lg font-bold text-custom-gray">💳 Token Transactions</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <TransferTokens />
+              <TransferFromTokens />
               <ApproveAllowance />
-            </Flex>
-          </Box>
+            </div>
+          </div>
 
-          {/* Admin Operations Section */}
-          <Box mt={12} px={6} py={8} borderRadius="lg">
-            <Heading
-              as="h1"
-              textAlign="center"
-              fontSize="3xl"
-              fontWeight="bold"
-              color="black"
-              mb={2}
-            >
-              <Highlight query="Flower Token" styles={{ color: "teal.700" }}>
-                Flower Token Admin Operations
-              </Highlight>
-            </Heading>
-            <Text fontSize="sm" color="gray.500" mb={6} textAlign="center">
-              Manage Flower token supply and perform administrative actions.
-            </Text>
-            <Flex
-              wrap="wrap"
-              justify="center"
-              align="start"
-              p={4}
-              borderRadius="lg"
-            >
-              <TokenAdminActions />
-              <MintTokens />
-              <BurnTokens />
-            </Flex>
-          </Box>
-        </>
+          {/* 🔹 Admin Actions (Only for Owner) */}
+          {isOwner && (
+            <div className="flex flex-col gap-6 p-3 bg-white/50 rounded-2xl">
+              <h2 className="text-lg font-bold text-custom-gray">⚙️ Admin Actions</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <MintTokens />
+                <BurnTokens />
+                <TokenAdminActions />
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <p className="text-custom-gray text-lg font-medium">Please connect your wallet to view details.</p>
+        </div>
       )}
-    </Box>
+    </div>
   );
 }

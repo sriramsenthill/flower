@@ -39,25 +39,15 @@ export default function ChangeOwnership() {
         <Flex direction="column" gap={4}>
 
             <Input
-                color="black"
                 placeholder="Change ownership"
                 value={newOwner}
                 onChange={(e) => setNewOwner(e.target.value)}
-                bg="gray.100"
-                borderColor="gray.300"
-                pl="4"
-                _focus={{ borderColor: "teal.500", boxShadow: "0 0 0 1px #319795" }}
-                _hover={{ borderColor: "teal.400" }}
+                className="w-full outline-none bg-white rounded-xl border-none bg-transparent text-custom-gray placeholder:text-custom-gray text-base sm:text-xl font-bold px-4"
             />
             <Button
-                bg="teal.500"
-                colorScheme="red"
                 onClick={changeOwnerShip}
                 loading={isPending}
                 loadingText="Transferring.."
-                mt={4}
-                _hover={{ bg: "teal.400" }}
-                _active={{ bg: "teal.600" }}
             >
                 Transfer Ownership
             </Button>

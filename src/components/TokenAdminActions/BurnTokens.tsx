@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Box, Input, Heading, Stack } from "@chakra-ui/react";
+
+import { useState } from "react";
 import { toaster } from "@/components/ui/toaster";
 import Button from "@/components/ui/button";
 import { BaseError, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
@@ -12,19 +12,15 @@ const BurnTokens = () => {
     const [amount, setAmount] = useState<string>("");
 
     const { data: hash, isPending, writeContract, isError, error } = useWriteContract();
-
-    const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-        hash,
-    });
-
+    const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
 
     const burnTokens = async () => {
-        if (fromAddress.trim() === "" || !amount) {
+        if (!fromAddress.trim() || !amount.trim()) {
             toaster.create({
                 title: "Warning",
-                description: "From address and amount are required.",
+                description: "Both sender address and amount are required.",
                 type: "info",
-                duration: 2000,
+                duration: 3000,
             });
             return;
         }
@@ -42,91 +38,63 @@ const BurnTokens = () => {
                 title: "Error",
                 description: "Failed to burn tokens. Please try again.",
                 type: "error",
-                duration: 2000,
+                duration: 3000,
             });
         }
     };
 
     return (
-        <Box
-            p={8}
-            borderWidth={2}
-            borderRadius="lg"
-            boxShadow="sm"
-            bg="gray.50"
-            maxW="md"
-            mx="auto"
-            mt={8}
-        >
-            <Heading
-                fontSize="xl"
-                mb={4}
-                color="black"
-                fontWeight="semibold"
-                textAlign="center"
+        <div className="flex flex-col gap-4 p-3 bg-white/50 rounded-2xl">
+            <div className="relative flex flex-col gap-4">
+                {/* From Address Input */}
+                <div className="flex flex-col gap-2 rounded-2xl bg-white p-4">
+                    <div className="flex justify-between">
+                        <span className="font-satoshi text-custom-gray text-xs font-bold">From</span>
+                    </div>
+                    <div className="flex h-6 justify-between">
+                        <input
+                            className="w-full outline-none border-none bg-transparent text-custom-gray placeholder:text-custom-gray text-base sm:text-xl font-bold"
+                            placeholder="Enter sender address"
+                            type="text"
+                            value={fromAddress}
+                            onChange={(e) => setFromAddress(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                {/* Amount Input */}
+                <div className="flex flex-col gap-2 rounded-2xl bg-white p-4">
+                    <div className="flex justify-between">
+                        <span className="font-satoshi text-custom-gray text-xs font-bold">Amount</span>
+                    </div>
+                    <div className="flex h-6 justify-between">
+                        <input
+                            className="w-full outline-none border-none bg-transparent text-custom-gray placeholder:text-custom-gray text-base sm:text-xl font-bold"
+                            placeholder="Enter amount"
+                            type="text"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Burn Button */}
+            <Button
+                className="text-white text-xs sm:text-xs md:text-sm lg:text-base h-9 sm:h-9 md:h-10 lg:h-12 px-6 min-w-32 font-satoshi font-bold transition-colors duration-500 focus:outline-none rounded-xl sm:rounded-xl md:rounded-xl lg:rounded-2xl flex items-center justify-center hover:opacity-90"
+                onClick={burnTokens}
+                disabled={isPending}
             >
-                Burn Tokens
-            </Heading>
-            <Stack gap={4}>
-                <Input
-                    color="black"
-                    placeholder="Enter from address"
-                    value={fromAddress}
-                    onChange={(e) => setFromAddress(e.target.value)}
-                    bg="gray.100"
-                    borderColor="gray.300"
-                    pl="4"
-                    _focus={{ borderColor: "red.500", boxShadow: "0 0 0 1px #E53E3E" }}
-                    _hover={{ borderColor: "red.400" }}
-                />
-                <Input
-                    color="black"
-                    type="text"
-                    placeholder="Enter amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    bg="gray.100"
-                    borderColor="gray.300"
-                    pl="4"
-                    _focus={{ borderColor: "red.500", boxShadow: "0 0 0 1px #E53E3E" }}
-                    _hover={{ borderColor: "red.400" }}
-                />
-                <Button
-                    bg="red.500"
-                    colorScheme="red"
-                    onClick={burnTokens}
-                    loading={isPending}
-                    loadingText="Burning..."
-                    mt={4}
-                    _hover={{ bg: "red.400" }}
-                    _active={{ bg: "red.600" }}
-                >
-                    Burn Tokens
-                </Button>
-                {hash && (
-                    <div className="text-black w-full text-xs">Transaction Hash: {hash.slice(0, 7)}...{hash.slice(-7)}</div>
-                )}
-                {isConfirming && (
-                    <div className=" text-black w-full text-center text-sm">
-                        Waiting for confirmation...
-                    </div>
-                )}
-                {isConfirmed && (
-                    <div className="text-sm w-full text-center text-green-600">
-                        Transaction confirmed.
-                    </div>
-                )}
-                {isError && (
-                    <div className="text-sm w-full text-center text-red-600">
-                        Error:{" "}
-                        {(error as BaseError).shortMessage || error.message}
-                    </div>
-                )}
-            </Stack>
-        </Box>
+                {isPending ? "Burning..." : "Burn Tokens"}
+            </Button>
+
+            {/* Transaction Status Messages */}
+            {hash && <div className="text-black w-full text-xs text-center">Transaction Hash: {hash.slice(0, 7)}...{hash.slice(-7)}</div>}
+            {isConfirming && <div className="text-black w-full text-center text-sm">Waiting for confirmation...</div>}
+            {isConfirmed && <div className="text-sm w-full text-center text-green-600">Transaction confirmed.</div>}
+            {isError && <div className="text-sm w-full text-center text-red-600">Error: {(error as BaseError).shortMessage || error.message}</div>}
+        </div>
     );
-
-
 };
 
 export default BurnTokens;
