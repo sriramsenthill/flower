@@ -38,6 +38,23 @@ export const useTokenOperations = () => {
         }
     };
 
+    const getOwner = async () => {
+        try {
+            const result: string = await readContract(client, {
+                address: CONTRACT_ADDRESS,
+                abi: TOKEN_ABI,
+                functionName: "getOwner",
+                args: [],
+                blockTag: "latest",
+            }) as string;
+
+            return result;
+        } catch (error) {
+            console.error("Error fetching balance:", error);
+            return "null";
+        }
+    }
+
     const getMinter = async () => {
         try {
             const result: string = await readContract(client, {
@@ -119,6 +136,22 @@ export const useTokenOperations = () => {
         }
     }
 
+    const getStatus = async () => {
+        try {
+            const result: boolean = await readContract(client, {
+                address: CONTRACT_ADDRESS,
+                abi: TOKEN_ABI,
+                functionName: "status",
+                args: [],
+                blockTag: "latest",
+            }) as boolean;
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     return {
         getTotalSupply,
         getTokenDecimals,
@@ -126,6 +159,8 @@ export const useTokenOperations = () => {
         getTokenName,
         getMinter,
         checkBalance,
-        checkAllowance
+        checkAllowance,
+        getOwner,
+        getStatus
     };
 };

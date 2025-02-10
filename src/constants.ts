@@ -1,5 +1,5 @@
-export const DECIMALS = 8;
-export const CONTRACT_ADDRESS = "0x7CfABF36b1CE3E1B079624a5619449375caC070F";
+export const DECIMALS = 18;
+export const CONTRACT_ADDRESS = "0x729D3E73fB56E5117F99eDC54353B7Ac6C045a58";
 export const TOKEN_ABI = [
     {
         "type": "constructor",
@@ -13,6 +13,16 @@ export const TOKEN_ABI = [
                 "name": "symbol_",
                 "type": "string",
                 "internalType": "string"
+            },
+            {
+                "name": "initialSupply_",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "totalCappedSupply_",
+                "type": "uint256",
+                "internalType": "uint256"
             }
         ],
         "stateMutability": "nonpayable"
@@ -86,6 +96,30 @@ export const TOKEN_ABI = [
     },
     {
         "type": "function",
+        "name": "burn",
+        "inputs": [
+            {
+                "name": "from",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
         "name": "decimals",
         "inputs": [],
         "outputs": [
@@ -96,6 +130,19 @@ export const TOKEN_ABI = [
             }
         ],
         "stateMutability": "pure"
+    },
+    {
+        "type": "function",
+        "name": "getOwner",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
     },
     {
         "type": "function",
@@ -137,6 +184,39 @@ export const TOKEN_ABI = [
                 "name": "",
                 "type": "string",
                 "internalType": "string"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "status",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
             }
         ],
         "stateMutability": "view"
@@ -221,6 +301,26 @@ export const TOKEN_ABI = [
         "stateMutability": "nonpayable"
     },
     {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+            {
+                "name": "newMinter",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
         "type": "event",
         "name": "Approval",
         "inputs": [
@@ -247,6 +347,57 @@ export const TOKEN_ABI = [
     },
     {
         "type": "event",
+        "name": "Burn",
+        "inputs": [
+            {
+                "name": "from",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "value",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+            {
+                "name": "previousOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "newOwner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "Paused",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
         "name": "Transfer",
         "inputs": [
             {
@@ -266,6 +417,19 @@ export const TOKEN_ABI = [
                 "type": "uint256",
                 "indexed": false,
                 "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "Unpaused",
+        "inputs": [
+            {
+                "name": "account",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
             }
         ],
         "anonymous": false

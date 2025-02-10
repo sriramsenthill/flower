@@ -89,7 +89,7 @@ const CheckBalance = () => {
                 </Button>
                 {balance && (
                     <Text fontSize="sm" fontWeight="semibold" color="gray.700" textAlign="center">
-                        Balance: {balance} KET
+                        Balance: {balance} FLR
                     </Text>
                 )}
             </Stack>

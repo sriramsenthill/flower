@@ -105,7 +105,7 @@ const CheckAllowance = () => {
                     Check Allowance
                 </Button>
                 <Text fontSize="sm" fontWeight="semibold" color="gray.700" textAlign="center">
-                    Allowance: {amount} KET
+                    Allowance: {amount} FLR
                 </Text>
             </Stack>
         </Box>
