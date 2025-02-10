@@ -50,14 +50,8 @@ export default function Home() {
         <>
           {/* Token Info Section */}
           <Box mt={12} px={6} py={8} borderRadius="lg">
-            <h1 className="w-full text-center text-3xl text-black h-fit font-bold mb-2">
-              <Highlight query="Flower Token." styles={{ color: "teal.700" }}>
-                Interact with Flower Token.
-              </Highlight>
-            </h1>
-            <Text fontSize="sm" color="gray.500" mb={6} textAlign="center">
-              Check your Flower token balances, allowances, and manage your holdings.
-            </Text>
+
+
             <Flex
               wrap="wrap"
               justify="center"

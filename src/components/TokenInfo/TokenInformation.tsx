@@ -16,7 +16,6 @@ export default function TokenInformation() {
     } | null>(null);
 
     const { address } = useAccount();
-
     const {
         getTokenName,
         getTokenSymbol,
@@ -58,54 +57,64 @@ export default function TokenInformation() {
     }, [address]);
 
     return (
-        <div className="p-6 max-w-4xl min-w-md mx-auto mt-8 bg-gray-50">
-            <h2 className="text-xl font-semibold text-center mb-4">
-                Token Information
-            </h2>
+        <div className="flex flex-col w-full py-6 gap-y-4 bg-custom-green rounded-2xl">
+            <span className="px-4 text-xs font-bold text-white">Token Information</span>
 
             {loading ? (
                 <div className="flex items-center justify-center min-h-[200px]">
-                    <p className="text-sm font-semibold text-teal-700">
-                        Loading...
-                    </p>
+                    <p className="text-base text-white">Loading...</p>
                 </div>
             ) : tokenDetails ? (
-                <div className="flex flex-col gap-3">
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm font-semibold text-gray-700">Name:</p>
-                        <p className="text-gray-600">{tokenDetails.name}</p>
+                <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-y-4">
+                    <div className="flex items-center justify-between px-4 gap-y-2">
+                        <div className="text-base text-white">Name</div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <span className="text-base text-white">{tokenDetails.name}</span>
+                        </div>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm font-semibold text-gray-700">Symbol:</p>
-                        <p className="text-gray-600">{tokenDetails.symbol}</p>
+                    <div className="flex items-center justify-between px-4 gap-y-2">
+                        <div className="text-base text-white">Symbol</div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <span className="text-base text-white">{tokenDetails.symbol}</span>
+                        </div>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm font-semibold text-gray-700">Decimals:</p>
-                        <p className="text-gray-600">{tokenDetails.decimals}</p>
+                    <div className="flex items-center justify-between px-4 gap-y-2">
+                        <div className="text-base text-white">Decimals</div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <span className="text-base text-white">{tokenDetails.decimals}</span>
+                        </div>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm font-semibold text-gray-700">Your Balance:</p>
-                        <p className="text-gray-600">{tokenDetails.balance}</p>
+                    <div className="flex items-center justify-between px-4 gap-y-2">
+                        <div className="text-base text-white">Balance</div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <span className="text-base text-white">{tokenDetails.balance}</span>
+                        </div>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm font-semibold text-gray-700">Total Supply:</p>
-                        <p className="text-gray-600">{tokenDetails.totalSupply}</p>
+                    <div className="flex items-center justify-between px-4 gap-y-2">
+                        <div className="text-base text-white">Total Supply</div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <span className="text-base text-white">{tokenDetails.totalSupply}</span>
+                        </div>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm font-semibold text-gray-700">Minter:</p>
-                        <p className="text-gray-600 tracking-wider">
-                            {`${tokenDetails.minter.slice(0, 8)}...${tokenDetails.minter.slice(-7)}`}
-                        </p>
+                    <div className="flex items-center justify-between px-4 gap-y-2">
+                        <div className="text-base text-white">Minter</div>
+                        <div className="flex items-center gap-x-1 w-fit">
+                            <span className="text-base text-white">
+                                {`${tokenDetails.minter.slice(0, 8)}...${tokenDetails.minter.slice(-7)}`}
+                            </span>
+                        </div>
                     </div>
+
+                    <div className="absolute hidden h-full border-r sm:block border-white/30 left-1/2"></div>
                 </div>
             ) : (
-                <div className="text-center p-6">
-                    <p className="text-sm text-red-500">
+                <div className="px-4">
+                    <p className="text-base text-white">
                         Failed to fetch token details. Please try again later.
                     </p>
                 </div>

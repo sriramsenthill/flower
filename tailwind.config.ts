@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         'custom-gray': '#55525d',
         'custom-pink': '#e36492',
+        'custom-green': '#58bc99',
         'button-primary': '#e36492',
       },
       fontFamily: {
