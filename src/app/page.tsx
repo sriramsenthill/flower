@@ -16,11 +16,8 @@ import { useEffect, useState } from "react";
 import { toaster } from "@/components/ui/toaster";
 
 export default function Home() {
-
   const { isConnected, address } = useAccount();
-
   const [isOwner, setIsOwner] = useState<boolean>(false);
-
   const { getOwner } = useTokenOperations();
 
   const checkTokenOwner = async () => {
@@ -45,39 +42,21 @@ export default function Home() {
     checkTokenOwner();
   }, [isConnected]);
 
-
   return (
-    <Box height="100%" minHeight="100dvh" p={6} bg="gray.50">
-      <Stack
-        align="center"
-        justify="center"
-        gap={8}
-        textAlign="center"
-        mt={12}
-        px={6}
-      >
-        <h1 className="w-[35rem] text-6xl text-black h-fit font-bold">
-          <Highlight query="with Ease." styles={{ color: "teal.700" }}>
-            Transfer Tokens Securely with Ease.
-          </Highlight>
-        </h1>
-        <Text fontSize="md" color="gray.600" maxW="lg">
-          Experience a seamless, fast, and secure way to manage your digital assets with our innovative token platform.
-        </Text>
-      </Stack>
+    <Box height="100%" minHeight="100dvh" p={6}>
+
 
       {isConnected && (
         <>
           {/* Token Info Section */}
-
           <Box mt={12} px={6} py={8} bg="white" borderRadius="lg">
             <h1 className="w-full text-center text-3xl text-black h-fit font-bold mb-2">
-              <Highlight query="Contract." styles={{ color: "teal.700" }}>
-                Interact with Contract.
+              <Highlight query="Flower Token." styles={{ color: "teal.700" }}>
+                Interact with Flower Token.
               </Highlight>
             </h1>
             <Text fontSize="sm" color="gray.500" mb={6} textAlign="center">
-              Interact with the contract to check token balances, allowances, and more.
+              Check your Flower token balances, allowances, and manage your holdings.
             </Text>
             <Flex
               wrap="wrap"
@@ -87,9 +66,9 @@ export default function Home() {
               bg="gray.50"
               borderRadius="lg"
             >
-              <TokenInformation />
+              {/* <TokenInformation />
               <CheckAllowance />
-              <CheckBalance />
+              <CheckBalance /> */}
             </Flex>
           </Box>
 
@@ -103,12 +82,12 @@ export default function Home() {
               color="black"
               mb={2}
             >
-              <Highlight query="Transactions" styles={{ color: "teal.700" }}>
-                Token Transactions
+              <Highlight query="Flower Token" styles={{ color: "teal.700" }}>
+                Flower Token Transactions
               </Highlight>
             </Heading>
             <Text fontSize="sm" color="gray.500" mb={6} textAlign="center">
-              Perform secure transfers and manage allowances.
+              Transfer Flower tokens and manage allowances securely.
             </Text>
             <Flex
               wrap="wrap"
@@ -118,9 +97,9 @@ export default function Home() {
               bg="gray.50"
               borderRadius="lg"
             >
-              <TransferFromTokens />
+              {/* <TransferFromTokens />
               <TransferTokens />
-              <ApproveAllowance />
+              <ApproveAllowance /> */}
             </Flex>
           </Box>
 
@@ -134,12 +113,12 @@ export default function Home() {
               color="black"
               mb={2}
             >
-              <Highlight query="Operations" styles={{ color: "teal.700" }}>
-                Admin Operations
+              <Highlight query="Flower Token" styles={{ color: "teal.700" }}>
+                Flower Token Admin Operations
               </Highlight>
             </Heading>
             <Text fontSize="sm" color="gray.500" mb={6} textAlign="center">
-              Manage token supply and perform admin-only actions.
+              Manage Flower token supply and perform administrative actions.
             </Text>
             <Flex
               wrap="wrap"
@@ -148,21 +127,14 @@ export default function Home() {
               p={4}
               bg="gray.50"
               borderRadius="lg"
-            // style={{
-            //   filter: isOwner ? "none" : "blur(0.5px)",
-            //   pointerEvents: isOwner ? "auto" : "none",
-            //   opacity: isOwner ? "1" : "0.6",
-            // }}
             >
-              <TokenAdminActions />
+              {/* <TokenAdminActions />
               <MintTokens />
-              <BurnTokens />
+              <BurnTokens /> */}
             </Flex>
           </Box>
-
         </>
       )}
     </Box>
   );
-
 }

@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { Button } from "../ui/button";
+import Button from '@/components/ui/button';
 import { useAccount, useDisconnect } from "wagmi";
 import {
     ClipboardIconButton,
@@ -39,8 +39,7 @@ export default function WalletConnected() {
             </ClipboardRoot>
 
             <Button
-                bg="teal.500"
-                colorScheme="teal"
+
                 onClick={() => {
                     disconnect();
                     toaster.create({
@@ -48,16 +47,7 @@ export default function WalletConnected() {
                         type: "info"
                     });
                 }}
-                bgColor="red.500"
-                height="fit-content"
-                color="white"
-                fontSize="sm"
-                fontWeight="semibold"
-                _hover={{
-                    bg: "red.600",
-                }}
-                px={5}
-                py={2}
+
             >
                 Disconnect
             </Button>

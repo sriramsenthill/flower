@@ -38,22 +38,11 @@ const ConnectionDrawer = () => {
             <DrawerBackdrop />
             <DrawerTrigger asChild>
                 <Button
-                    _hover={{
-                        bg: "teal.600",
-                    }}
+
                     onClick={() => {
                         setIsDrawerOpen(true);
                     }}
-                    bg="teal.500"
-                    fontWeight="semibold"
-                    colorScheme="teal"
-                    size="sm"
-                    variant="outline"
-                    fontSize="sm"
-                    padding='2'
-                    height="fit-content"
-                    paddingX="8"
-                    color="white"
+
                 >
                     Connect
                 </Button>
@@ -83,7 +72,7 @@ const ConnectionDrawer = () => {
                     <DrawerActionTrigger asChild>
                         <Button onClick={() => {
                             setIsDrawerOpen(false);
-                        }} variant="outline" color="gray.800">
+                        }} >
                             Close
                         </Button>
                     </DrawerActionTrigger>
@@ -129,14 +118,7 @@ function ConnectButton({
                 disabled={!ready}
                 onClick={onClick}
                 key={connector.uid}
-                colorScheme="blue"
-                variant="outline"
-                fontSize="xs"
-                bg="black"
-                padding='1'
-                height="fit-content"
-                paddingX="3"
-                color="white"
+
                 loadingText="Connecting"
             >
                 Connect

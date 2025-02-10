@@ -34,7 +34,6 @@ export default async function RootLayout({
             <Navigation />
             <Toaster />
             {children}
-            <Footer />
           </Provider>
         </WagmiProviderWrapper>
       </body>

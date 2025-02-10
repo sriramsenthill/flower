@@ -11,7 +11,7 @@ export default function Navigation() {
     const { isConnected } = useAccount();
 
     return (
-        <Box bg="white" color="black" px={6} py={4}>
+        <Box color="black" px={6} py={4}>
             <Flex align="center">
                 <Logo />
                 <Spacer />
