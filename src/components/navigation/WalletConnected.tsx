@@ -1,45 +1,39 @@
-import { Flex } from "@chakra-ui/react";
-import Button from '@/components/ui/button';
+import React from 'react';
 import { useAccount, useDisconnect } from "wagmi";
 import {
-    ClipboardIconButton,
-    ClipboardInput,
     ClipboardRoot,
+    ClipboardIconButton,
+    ClipboardInput
 } from "@/components/ui/clipboard";
+import Button from "@/components/ui/button";
 import { InputGroup } from "@/components/ui/input-group";
 import { toaster } from "../ui/toaster";
 
-export default function WalletConnected() {
+const WalletConnected = () => {
     const { address } = useAccount();
     const { disconnect } = useDisconnect();
 
     const shortenAddress = (address: string) => {
-        return `${address.slice(0, 7)}.....${address.slice(-7)}`;
+        return `${address.slice(0, 9)}...${address.slice(-7)}`;
     };
 
     return (
-        <Flex direction="row" align="center" gap={2}>
-            <ClipboardRoot value={address || ""} maxW="200px">
-                <InputGroup width="fit" endElement={<ClipboardIconButton />}>
-                    <ClipboardInput
-                        fontSize="sm"
-                        fontWeight="semibold"
-                        value={shortenAddress(address || "")}
-                        readOnly
-                        borderColor="gray.300"
-                        _focus={{ borderColor: "teal.500" }}
-                        _hover={{ borderColor: "teal.400" }}
-                        bg="gray.50"
-                        borderRadius="md"
-                        px={3}
-                        py={2}
-                        transition="all 0.3s ease"
-                    />
+        <div className="flex flex-row items-center gap-4">
+            <ClipboardRoot value={address || ""} className="max-w-[200px]">
+                <InputGroup className="w-fit">
+                    <div className="bg-white bg-opacity-50 ml-auto flex h-9 items-center justify-center rounded-full px-3">
+                        <ClipboardInput
+                            value={shortenAddress(address || "")}
+                            readOnly
+                            className="bg-transparent text-custom-gray text-sm font-semibold focus:outline-none w-auto"
+                        />
+                        <ClipboardIconButton className="p-0 text-custom-gray hover:opacity-80" />
+                    </div>
                 </InputGroup>
             </ClipboardRoot>
 
-            <Button
 
+            <Button
                 onClick={() => {
                     disconnect();
                     toaster.create({
@@ -47,10 +41,12 @@ export default function WalletConnected() {
                         type: "info"
                     });
                 }}
-
+                className="rounded-full px-4 h-9"
             >
                 Disconnect
             </Button>
-        </Flex>
+        </div>
     );
-}
+};
+
+export default WalletConnected;
