@@ -57,17 +57,9 @@ export default function UnPauseTokenOperations() {
     return (
         <Stack gap={1}>
             <Button
-                bg="blue.600"
-                colorScheme="blue"
                 onClick={handleUnpause}
                 loading={loading}
                 loadingText="Unpausing"
-                width="fit-content"
-                _hover={{ bg: 'blue.500' }}
-                _active={{ bg: 'blue.700' }}
-                borderRadius="md"
-                fontSize="md"
-                minW="5rem"
             >
                 Unpause
             </Button>

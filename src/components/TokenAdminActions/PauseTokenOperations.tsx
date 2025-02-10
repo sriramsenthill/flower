@@ -38,17 +38,9 @@ export default function PauseTokenOperations() {
     return (
         <Stack gap={1}>
             <Button
-                bg="red.600"
-                colorScheme="blue"
                 onClick={handlePause}
                 loading={isPending}
                 loadingText="Pausing..."
-                width="fit-content"
-                _hover={{ bg: 'blue.500' }}
-                _active={{ bg: 'blue.700' }}
-                borderRadius="md"
-                fontSize="md"
-                minW="5rem"
             >
                 Pause
             </Button>
