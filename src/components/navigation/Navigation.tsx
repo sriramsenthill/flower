@@ -1,24 +1,23 @@
 "use client";
 
-import { Box, Flex, Spacer } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import ConnectionDrawer from "./ConnectionDrawer";
 import { useAccount } from "wagmi";
 import WalletConnected from "./WalletConnected";
 import Logo from "./Logo";
-import { useEffect, useState } from "react";
 
 export default function Navigation() {
     const { isConnected } = useAccount();
 
     return (
-        <Box color="black" px={6} py={4}>
-            <Flex align="center">
+        <nav className="w-full px-6 py-4 bg-transparent">
+            <Flex align="center" justify="space-between">
+                {/* 🔹 Logo on the LEFT */}
                 <Logo />
-                <Spacer />
-                <Flex gap={4}>
-                    {isConnected ? <WalletConnected /> : <ConnectionDrawer />}
-                </Flex>
+
+                {/* 🔹 Wallet Connection Button on the RIGHT */}
+                {isConnected ? <WalletConnected /> : <ConnectionDrawer />}
             </Flex>
-        </Box>
+        </nav>
     );
 }

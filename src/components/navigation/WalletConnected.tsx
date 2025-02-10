@@ -1,15 +1,16 @@
-import React from 'react';
+import React from "react";
 import { useAccount, useDisconnect } from "wagmi";
+import Link from "next/link";
 import {
     ClipboardRoot,
     ClipboardIconButton,
-    ClipboardInput
+    ClipboardInput,
 } from "@/components/ui/clipboard";
 import Button from "@/components/ui/button";
 import { InputGroup } from "@/components/ui/input-group";
 import { toaster } from "../ui/toaster";
 
-const WalletConnected = () => {
+const Navbar = () => {
     const { address } = useAccount();
     const { disconnect } = useDisconnect();
 
@@ -18,35 +19,61 @@ const WalletConnected = () => {
     };
 
     return (
-        <div className="flex flex-row items-center gap-4">
-            <ClipboardRoot value={address || ""} className="max-w-[200px]">
-                <InputGroup className="w-fit">
-                    <div className="bg-white bg-opacity-50 ml-auto flex h-9 items-center justify-center rounded-full px-3">
-                        <ClipboardInput
-                            value={shortenAddress(address || "")}
-                            readOnly
-                            className="bg-transparent text-custom-gray text-sm font-semibold focus:outline-none w-auto"
-                        />
-                        <ClipboardIconButton className="p-0 text-custom-gray hover:opacity-80" />
-                    </div>
-                </InputGroup>
-            </ClipboardRoot>
+        <header className="w-full p-4 flex items-center gap-6 justify-between">
+            {/* 🔹 Navigation Links */}
+            <nav className="flex text-custom-gray gap-6 ml-auto">
+                <Link
+                    href="/balance"
+                    className="text-sm font-extrabold hover:opacity-80"
+                >
+                    Check Balance
+                </Link>
+                <Link
+                    href="/transfer"
+                    className=" text-sm font-extrabold hover:opacity-80"
+                >
+                    Transfer
+                </Link>
+                <Link
+                    href="/admin"
+                    className=" text-sm font-extrabold hover:opacity-80"
+                >
+                    Admin Actions
+                </Link>
+            </nav>
 
+            {/* 🔹 Wallet Info & Disconnect */}
+            <div className="flex items-center gap-4">
+                {address && (
+                    <ClipboardRoot value={address || ""}>
+                        <InputGroup className="w-fit">
+                            <div className="bg-white bg-opacity-50 flex h-9 items-center justify-center rounded-full px-3">
+                                <ClipboardInput
+                                    value={shortenAddress(address)}
+                                    readOnly
+                                    className="bg-transparent text-custom-gray text-sm font-semibold focus:outline-none w-auto"
+                                />
+                                <ClipboardIconButton className="p-0 text-custom-gray hover:opacity-80" />
+                            </div>
+                        </InputGroup>
+                    </ClipboardRoot>
+                )}
 
-            <Button
-                onClick={() => {
-                    disconnect();
-                    toaster.create({
-                        title: "Disconnected Successfully.",
-                        type: "info"
-                    });
-                }}
-                className="rounded-full px-4 h-9"
-            >
-                Disconnect
-            </Button>
-        </div>
+                <Button
+                    onClick={() => {
+                        disconnect();
+                        toaster.create({
+                            title: "Disconnected Successfully.",
+                            type: "info",
+                        });
+                    }}
+                    className="rounded-full px-4 h-9 hover:bg-red-400"
+                >
+                    Disconnect
+                </Button>
+            </div>
+        </header>
     );
 };
 
-export default WalletConnected;
+export default Navbar;

@@ -1,13 +1,5 @@
 "use client";
 
-import ApproveAllowance from "@/components/TokenTransactions/ApproveAllowance";
-import BurnTokens from "@/components/TokenAdminActions/BurnTokens";
-import CheckAllowance from "@/components/TokenInfo/CheckAllowance";
-import MintTokens from "@/components/TokenAdminActions/MintTokens";
-import TransferFromTokens from "@/components/TokenTransactions/TransferFromTokens";
-import TransferTokens from "@/components/TokenTransactions/TransferTokens";
-import TokenAdminActions from "@/components/TokenAdminActions/TokenAdminActions";
-import CheckBalance from "@/components/TokenInfo/CheckBalance";
 import TokenInformation from "@/components/TokenInfo/TokenInformation";
 import { useTokenOperations } from "@/hooks/useTokenOperations";
 import { useAccount } from "wagmi";
@@ -38,45 +30,16 @@ export default function Home() {
   }, [isConnected]);
 
   return (
-    <div className="min-h-screen p-6 bg-transparent">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-transparent">
       {isConnected ? (
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* 🔹 Token Information Section */}
-          <div className="flex flex-col gap-6 p-3 bg-white/50 rounded-2xl">
-            <h2 className="text-lg font-bold text-custom-gray">🔍 Token Information</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <TokenInformation />
-              <CheckBalance />
-              <CheckAllowance />
-            </div>
+        <div className="w-full max-w-4xl p-6 bg-white/50 rounded-2xl flex flex-col items-center">
+          <h2 className="text-lg font-bold text-custom-gray mb-6">🔍 Token Information</h2>
+          <div className="w-full">
+            <TokenInformation />
           </div>
-
-          {/* 🔹 Token Transactions Section */}
-          <div className="flex flex-col gap-6 p-3 bg-white/50 rounded-2xl">
-            <h2 className="text-lg font-bold text-custom-gray">💳 Token Transactions</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <TransferTokens />
-              <TransferFromTokens />
-              <ApproveAllowance />
-            </div>
-          </div>
-
-          {/* 🔹 Admin Actions (Only for Owner) */}
-          {isOwner && (
-            <div className="flex flex-col gap-6 p-3 bg-white/50 rounded-2xl">
-              <h2 className="text-lg font-bold text-custom-gray">⚙️ Admin Actions</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <MintTokens />
-                <BurnTokens />
-                <TokenAdminActions />
-              </div>
-            </div>
-          )}
         </div>
       ) : (
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <p className="text-custom-gray text-lg font-medium">Please connect your wallet to view details.</p>
-        </div>
+        <p className="text-custom-gray text-lg font-medium">Please connect your wallet to view details.</p>
       )}
     </div>
   );
