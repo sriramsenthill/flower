@@ -5,8 +5,8 @@ A decentralized ERC-20 token implementation built with Solidity and Foundry, fea
 
 ## 📝 Contract Details
 
-- **Token Name**: Flower Token
-- **Symbol**: FLWR
+- **Token Name**: flower Token
+- **Symbol**: FLR
 - **Total Supply**: 1,000 tokens
 - **Network**: Sepolia Testnet
 - **Contract Address**: 0x729D3E73fB56E5117F99eDC54353B7Ac6C045a58
