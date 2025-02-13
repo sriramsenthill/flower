@@ -8,7 +8,7 @@ import Footer from "@/components/footer/Footer";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { wagmiConfig } from "@/config/wagmiConfig";
-
+import { GoogleTagManager } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "flower 🌸",
@@ -37,6 +37,7 @@ export default async function RootLayout({
           </Provider>
         </WagmiProviderWrapper>
       </body>
+      <GoogleTagManager gtmId="GTM-N6VTQV6X" />
     </html>
   );
 }
