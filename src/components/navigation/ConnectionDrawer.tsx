@@ -7,14 +7,19 @@ const WalletConnectionModal = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { connect, connectors } = useConnect();
     const chainId = useChainId();
-    const { isConnected } = useAccount();
+    const { isConnected, address } = useAccount();  // Extract wallet address
     const router = useRouter();
 
     useEffect(() => {
-        if (isConnected) {
+        if (isConnected && address) {
             setIsOpen(false);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "wallet_connected",
+                wallet_address: address,
+            });
         }
-    }, [isConnected]);
+    }, [isConnected, address]);
 
     if (!isOpen) {
         return (
@@ -38,7 +43,6 @@ const WalletConnectionModal = () => {
                         </button>
                     </div>
 
-
                     {/* Wallet List */}
                     <div className="flex flex-col gap-1 overflow-y-auto rounded-2xl bg-white/50 p-4">
                         {connectors.map((connector) => (
@@ -51,8 +55,6 @@ const WalletConnectionModal = () => {
                                 }}
                             />
                         ))}
-
-
                     </div>
 
                     {/* Terms */}
