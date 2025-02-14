@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 import Link from "next/link";
 import {
@@ -11,11 +11,40 @@ import { InputGroup } from "@/components/ui/input-group";
 import { toaster } from "../ui/toaster";
 
 const Navbar = () => {
-    const { address } = useAccount();
+    const { address, isConnected } = useAccount();
     const { disconnect } = useDisconnect();
+
+    // Track wallet connection status
+    useEffect(() => {
+        if (isConnected && address) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "wallet_connected",
+                wallet_address: address,
+            });
+        }
+    }, [isConnected, address]);
 
     const shortenAddress = (address: string) => {
         return `${address.slice(0, 9)}...${address.slice(-7)}`;
+    };
+
+    const handleDisconnect = () => {
+        // Send GTM event before disconnecting
+        if (address) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "wallet_disconnected",
+                wallet_address: address,
+            });
+            console.log("Disconnected wallet address:", address);
+        }
+
+        disconnect();
+        toaster.create({
+            title: "Disconnected Successfully.",
+            type: "info",
+        });
     };
 
     return (
@@ -30,13 +59,13 @@ const Navbar = () => {
                 </Link>
                 <Link
                     href="/transfer"
-                    className=" text-sm font-extrabold hover:opacity-80"
+                    className="text-sm font-extrabold hover:opacity-80"
                 >
                     Transfer
                 </Link>
                 <Link
                     href="/admin"
-                    className=" text-sm font-extrabold hover:opacity-80"
+                    className="text-sm font-extrabold hover:opacity-80"
                 >
                     Admin Actions
                 </Link>
@@ -60,13 +89,7 @@ const Navbar = () => {
                 )}
 
                 <Button
-                    onClick={() => {
-                        disconnect();
-                        toaster.create({
-                            title: "Disconnected Successfully.",
-                            type: "info",
-                        });
-                    }}
+                    onClick={handleDisconnect}
                     className="rounded-full px-4 h-9 hover:bg-red-400"
                 >
                     Disconnect

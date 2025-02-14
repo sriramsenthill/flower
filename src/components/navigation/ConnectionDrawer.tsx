@@ -7,19 +7,15 @@ const WalletConnectionModal = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { connect, connectors } = useConnect();
     const chainId = useChainId();
-    const { isConnected, address } = useAccount();  // Extract wallet address
+    const { isConnected } = useAccount();
     const router = useRouter();
 
+
     useEffect(() => {
-        if (isConnected && address) {
+        if (isConnected) {
             setIsOpen(false);
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: "wallet_connected",
-                wallet_address: address,
-            });
         }
-    }, [isConnected, address]);
+    }, [isConnected]);
 
     if (!isOpen) {
         return (
@@ -50,8 +46,12 @@ const WalletConnectionModal = () => {
                                 key={connector.uid}
                                 connector={connector}
                                 onClick={async () => {
-                                    await connect({ connector, chainId });
-                                    router.push('/');
+                                    try {
+                                        await connect({ connector, chainId });
+                                        router.push('/');
+                                    } catch (error) {
+                                        console.error("Connection error:", error);
+                                    }
                                 }}
                             />
                         ))}
@@ -82,8 +82,13 @@ const WalletOption = ({ connector, onClick }: { connector: Connector; onClick: (
 
     useEffect(() => {
         (async () => {
-            const provider = await connector.getProvider();
-            setReady(!!provider);
+            try {
+                const provider = await connector.getProvider();
+                setReady(!!provider);
+            } catch (error) {
+                console.error("Provider error:", error);
+                setReady(false);
+            }
         })();
     }, [connector]);
 
